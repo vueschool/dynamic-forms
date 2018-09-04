@@ -25,11 +25,17 @@
 <script>
   import {required} from 'vuelidate/lib/validators'
   export default {
+    props: {
+      wizardData: {
+        type: Object,
+        required: true
+      }
+    },
     data () {
       return {
         form: {
           address: null,
-          recipient: null
+          recipient: this.wizardData.name
         }
       }
     },
