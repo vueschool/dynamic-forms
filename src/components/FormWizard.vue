@@ -20,11 +20,10 @@
 
       <button
         @click="goNext"
+        :disabled="!canGoNext"
         class="btn"
       >Next</button>
     </div>
-
-    <pre><code>{{form}}</code></pre>
   </div>
 </template>
 
@@ -44,6 +43,7 @@ export default {
   data () {
     return {
       currentStepNumber: 1,
+      canGoNext: false,
       length: 4,
       form: {
         plan: null,
@@ -65,12 +65,14 @@ export default {
   methods: {
     processStep (stepData) {
       Object.assign(this.form, stepData)
+      this.canGoNext = true
     },
     goBack () {
       this.currentStepNumber--
     },
     goNext () {
       this.currentStepNumber++
+      this.canGoNext = false
     }
   }
 }
