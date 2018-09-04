@@ -1,9 +1,9 @@
 <template>
   <div>
-    <FormPlanPicker v-if="currentStepNumber === 1"/>
-    <FormUserDetails v-if="currentStepNumber === 2"/>
-    <FormAddress v-if="currentStepNumber === 3"/>
-    <FormReviewOrder v-if="currentStepNumber === 4"/>
+    <FormPlanPicker v-if="currentStepNumber === 1" @update="processStep"/>
+    <FormUserDetails v-if="currentStepNumber === 2" @update="processStep"/>
+    <FormAddress v-if="currentStepNumber === 3" @update="processStep"/>
+    <FormReviewOrder v-if="currentStepNumber === 4" @update="processStep"/>
 
     <div class="progress-bar">
       <div :style="`width: ${progress}%;`"></div>
@@ -17,6 +17,7 @@
         class="btn-outlined"
       >Back
       </button>
+
       <button
         @click="goNext"
         class="btn"
@@ -62,6 +63,9 @@ export default {
     }
   },
   methods: {
+    processStep (stepData) {
+      Object.assign(this.form, stepData)
+    },
     goBack () {
       this.currentStepNumber--
     },
