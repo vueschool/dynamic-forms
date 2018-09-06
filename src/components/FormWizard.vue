@@ -6,6 +6,7 @@
           ref="currentStep"
           :is="currentStep"
           @update="processStep"
+          @updateAsyncState="updateAsyncState"
           :wizard-data="form"
         ></component>
       </keep-alive>
@@ -106,6 +107,9 @@ export default {
     }
   },
   methods: {
+    updateAsyncState (state) {
+      this.asyncState = state
+    },
     submitOrder () {
       this.asyncState = 'pending'
       postFormToDB(this.form)

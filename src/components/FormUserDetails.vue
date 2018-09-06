@@ -79,31 +79,37 @@
     methods: {
       checkIfUserExists () {
         if (!this.$v.form.email.$invalid) {
+          this.$emit('updateAsyncState', 'pending')
           return checkIfUserExistsInDB(this.form.email)
             .then(() => {
               // USER EXISTS
               this.existingUser = true
               this.emailCheckedInDB = true
+              this.$emit('updateAsyncState', 'success')
             })
             .catch(() => {
               // USER DOESN'T EXIST
               this.existingUser = false
               this.emailCheckedInDB = true
+              this.$emit('updateAsyncState', 'success')
             })
         }
       },
       login () {
         this.wrongPassword = false
         if (!this.$v.form.password.$invalid) {
+          this.$emit('updateAsyncState', 'pending')
           return authenticateUser(this.form.email, this.form.password)
             .then(user => {
               // LOGGED IN
               this.form.name = user.name
               this.submit()
+              this.$emit('updateAsyncState', 'success')
             })
             .catch(() => {
               // WRONG PASSWORD?
               this.wrongPassword = true
+              this.$emit('updateAsyncState', 'success')
             })
         }
       },
