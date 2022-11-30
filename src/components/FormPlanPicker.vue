@@ -72,6 +72,18 @@
     methods: {
       pickPlan (plan) {
         this.selectedPlan = plan
+      },
+      submit () {
+        this.$v.$touch()
+        return new Promise((resolve, reject) => {
+          if (!this.$v.$invalid) {
+            resolve({
+              plan: this.selectedPlan
+            })
+          } else {
+            reject('plan not selected')
+          }
+        })
       }
     }
   }
